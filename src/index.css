@@ -4,6 +4,6 @@
 
 @layer components {
   body {
-    @apply h-screen bg-gradient-to-b from-offWhite to-lightGreen;
+    @apply h-screen bg-gradient-to-b from-offWhite to-lightGreen font-poppins;
   }
 }
