@@ -4,6 +4,11 @@
 
 @layer components {
   body {
-    @apply h-screen bg-gradient-to-b from-offWhite to-lightGreen font-poppins;
+    @apply min-h-screen bg-gradient-to-b from-offWhite to-lightGreen font-poppins;
+  }
+
+  .nav:before {
+    @apply -z-10 content-[''] absolute bottom-0 h-[120%] w-full;
+    background: linear-gradient(to top, #d7e5e3 80%, transparent 100%);
   }
 }
