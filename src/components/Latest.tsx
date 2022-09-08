@@ -65,7 +65,7 @@ export const BookCard = ({ book }: BookCardType) => {
         </p>
         <p className="text-sm opacity-30">
           {book.authors.map((author, idx, arr) => (
-            <span className="capitalize">
+            <span key={idx} className="capitalize">
               {author}
               {idx < arr.length - 1 && ", "}
             </span>
