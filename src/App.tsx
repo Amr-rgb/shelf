@@ -1,14 +1,14 @@
-import { Header } from "./components/Header";
-import { Main } from "./components/Main";
-import { Latest } from "./components/Latest";
+import { Route, Routes } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
+import { Home } from "./components/home/Home";
 
 function App() {
   return (
     <div className="App px-4 py-8 pb-44">
-      <Header />
-      <Main />
-      <Latest />
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+
       <Navbar />
     </div>
   );
