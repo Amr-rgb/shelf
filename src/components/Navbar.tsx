@@ -6,7 +6,7 @@ import {
 
 export const Navbar = () => {
   return (
-    <div className="nav py-4 pb-6 fixed bottom-0 left-0 right-0">
+    <div className="nav z-50 py-4 pb-6 fixed bottom-0 left-0 right-0">
       <div className="px-4 flex items-center justify-between">
         <div className="rounded-3xl cursor-pointer">
           <MagnifyingGlassIcon className="p-2 w-11" />
