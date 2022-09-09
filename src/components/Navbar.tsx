@@ -3,22 +3,51 @@ import {
   MagnifyingGlassIcon,
   QueueListIcon,
 } from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [active, setActive] = useState(location.pathname);
+
+  useEffect(() => {
+    setActive(location.pathname);
+  }, [location]);
+
   return (
     <div className="nav z-50 py-4 pb-6 fixed bottom-0 left-0 right-0">
       <div className="px-4 flex items-center justify-between">
-        <div className="rounded-3xl cursor-pointer">
+        <button
+          onClick={() => navigate("/search")}
+          className={`rounded-3xl p-5 duration-500 ${
+            active === "/search"
+              ? "bg-white pointer-events-none"
+              : "cursor-pointer"
+          }`}
+        >
           <MagnifyingGlassIcon className="p-2 w-11" />
-        </div>
+        </button>
 
-        <div className="bg-white p-5 rounded-3xl">
+        <button
+          onClick={() => navigate("/")}
+          className={`rounded-3xl p-5 duration-500 ${
+            active === "/" ? "bg-white pointer-events-none" : "cursor-pointer"
+          }`}
+        >
           <HomeIcon className="p-2 w-11" />
-        </div>
+        </button>
 
-        <div className="rounded-3xl cursor-pointer">
+        <button
+          onClick={() => navigate("/library")}
+          className={`rounded-3xl p-5 duration-500 ${
+            active === "/library"
+              ? "bg-white pointer-events-none"
+              : "cursor-pointer"
+          }`}
+        >
           <QueueListIcon className="p-2 w-11" />
-        </div>
+        </button>
       </div>
     </div>
   );
