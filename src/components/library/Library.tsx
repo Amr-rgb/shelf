@@ -40,8 +40,8 @@ export const Library = () => {
       {books.length ? (
         <div className="space-y-6">
           {books.map((book) => (
-            <div className="bg-white p-4 rounded-lg space-y-2">
-              <BookCard key={book.id} book={book} />
+            <div key={book.id} className="bg-white p-4 rounded-lg space-y-2">
+              <BookCard book={book} />
             </div>
           ))}
         </div>
