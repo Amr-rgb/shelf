@@ -1,7 +1,7 @@
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 
-export const Header = () => {
+export const Header = ({ title }: { title: string }) => {
   const navigate = useNavigate();
 
   return (
@@ -12,7 +12,7 @@ export const Header = () => {
       />
 
       <p className="font-bold text-[1.1rem] text-center absolute left-1/2 -translate-x-1/2 truncate w-[50vw]">
-        {"Batman: The Dark Knight - Golden Dawn"}
+        {title}
       </p>
     </div>
   );
