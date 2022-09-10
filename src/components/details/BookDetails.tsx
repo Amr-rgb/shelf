@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
+import { AddBook } from "./AddBook";
 import { Header } from "./Header";
 
 export const BookDetails = () => {
@@ -23,7 +24,7 @@ export const BookDetails = () => {
       <Header />
 
       <div className="space-y-8">
-        {loc === "library" && <UserDetails />}
+        {loc === "library" ? <UserDetails /> : <AddBook />}
 
         <div className="space-y-6 bg-white p-4 py-8 rounded-xl">
           <p className="uppercase font-caudex font-bold text-xl text-center">
