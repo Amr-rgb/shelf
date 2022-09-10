@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type bookType = {
   book_id?: number;
@@ -13,22 +14,40 @@ type bookType = {
 
 type BookCardType = {
   book: bookType;
+  searchValue: string;
 };
 
 type ResultsType = {
-  results: bookType[];
+  res: bookType[];
+  searchValue: string;
 };
 
-export const Results = ({ results }: ResultsType) => {
+export const Results = ({ res, searchValue }: ResultsType) => {
+  const [results, setResults] = useState<bookType[]>(
+    JSON.parse(window.sessionStorage.getItem("books")!)
+  );
+
+  useEffect(() => {
+    if ((results && results.length === 0) || !results) {
+      setResults(res);
+    }
+  }, [res]);
+
   return (
     <div className="mt-14">
-      <ResultsHeader number={results.length} />
+      <ResultsHeader number={results?.length || 0} />
 
-      <div className="mt-10 space-y-6">
-        {results.map((res) => (
-          <ResultCard key={res.book_id} book={res} />
-        ))}
-      </div>
+      {results && (
+        <div className="mt-10 space-y-6">
+          {results.map((res) => (
+            <ResultCard
+              key={res.book_id}
+              book={res}
+              searchValue={searchValue}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
@@ -47,17 +66,24 @@ const ResultsHeader = ({ number }: { number: number }) => {
   );
 };
 
-const ResultCard = ({ book }: BookCardType) => {
+const ResultCard = ({ book, searchValue }: BookCardType) => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+
+  const clickHandler = () => {
+    window.sessionStorage.setItem("searchValue", searchValue);
+    navigate(`${book.book_id}`);
+  };
 
   return (
     <>
       <div className="flex items-center bg-white p-3 rounded-xl relative">
         <div
-          className="bg-cover bg-center shadow-[5px_5px_20px_rgba(40,53,60,.2)] w-14 h-20"
+          className="bg-cover bg-center shadow-[5px_5px_20px_rgba(40,53,60,.2)] w-14 h-20 cursor-pointer"
           style={{
             backgroundImage: `url(${book.cover})`,
           }}
+          onClick={clickHandler}
         ></div>
 
         <div className="ml-6 mr-auto space-y-2 flex-1 max-w-[12rem]">

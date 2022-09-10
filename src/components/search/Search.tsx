@@ -18,13 +18,20 @@ const options = {
 };
 
 export const Search = () => {
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState(
+    window.sessionStorage.getItem("searchValue") || ""
+  );
   const debouncedValue = useDebounce(searchValue, 500);
 
   const [results, setResults] = useState([]);
 
   useEffect(() => {
-    if (debouncedValue) {
+    results.length &&
+      window.sessionStorage.setItem("books", JSON.stringify(results));
+  }, [results]);
+
+  useEffect(() => {
+    if (debouncedValue && !window.sessionStorage.getItem("searchValue")) {
       axios
         .get(
           `https://hapi-books.p.rapidapi.com/search/${debouncedValue
@@ -37,15 +44,11 @@ export const Search = () => {
     }
   }, [debouncedValue]);
 
-  useEffect(() => {
-    console.log(results);
-  }, [results]);
-
   return (
     <div>
       <SearchHeader searchValue={searchValue} setSearchValue={setSearchValue} />
 
-      <Results results={results} />
+      <Results res={results} searchValue={searchValue} />
     </div>
   );
 };
