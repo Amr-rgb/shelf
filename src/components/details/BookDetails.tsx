@@ -68,9 +68,20 @@ const BookDetail = ({ title, value }: { title: any; value: any }) => {
 
 const UserDetails = () => {
   return (
-    <div className="space-y-2">
-      <UserDetail title="pages" value="234" />
-      <UserDetail title="read" value="20" />
+    <div className="bg-white p-8 rounded-xl">
+      <div className="space-y-2">
+        <UserDetail title="pages" value="234" />
+        <UserDetail title="read" value="20" />
+      </div>
+
+      <div className="mt-8 flex space-x-2">
+        <button className="flex-1 py-4 px-8 rounded-xl bg-lightGreen">
+          Save
+        </button>
+        <button className="flex-1 py-4 px-8 rounded-xl bg-[#f00] text-white">
+          Delete
+        </button>
+      </div>
     </div>
   );
 };
