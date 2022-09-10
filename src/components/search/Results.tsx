@@ -1,55 +1,42 @@
 import { useState } from "react";
 
 type bookType = {
-  id: string;
-  title: string;
-  authors: string[];
-  imgUrl: string;
+  book_id?: number;
+  name?: string;
+  cover?: string;
+  url?: string;
+  authors?: string[];
+  rating?: number;
+  created_editions?: number;
+  year?: number;
 };
 
 type BookCardType = {
   book: bookType;
 };
 
-export const Results = () => {
-  const results = [
-    {
-      id: "1",
-      title: "The Goldfinch",
-      authors: ["Donna Tartt"],
-      read: 124,
-      pages: 200,
-      imgUrl:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_hNKNOpY_W-Xlr_O6cCppzUX-fxkDKK88GEem1-kFdsAMNRTX5rjd5AkLAkh_J_GBBIc&usqp=CAU",
-    },
-    {
-      id: "2",
-      title: "The Goldfinch",
-      authors: ["Donna Tartt"],
-      read: 113,
-      pages: 300,
-      imgUrl:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_hNKNOpY_W-Xlr_O6cCppzUX-fxkDKK88GEem1-kFdsAMNRTX5rjd5AkLAkh_J_GBBIc&usqp=CAU",
-    },
-  ];
+type ResultsType = {
+  results: bookType[];
+};
 
+export const Results = ({ results }: ResultsType) => {
   return (
     <div className="mt-14">
-      <ResultsHeader />
+      <ResultsHeader number={results.length} />
 
       <div className="mt-10 space-y-6">
         {results.map((res) => (
-          <ResultCard key={res.id} book={res} />
+          <ResultCard key={res.book_id} book={res} />
         ))}
       </div>
     </div>
   );
 };
 
-const ResultsHeader = () => {
+const ResultsHeader = ({ number }: { number: number }) => {
   return (
     <div className="flex justify-between">
-      <h1 className="font-bold text-lg">Results: {0}</h1>
+      <h1 className="font-bold text-lg">Results: {number}</h1>
       <p className="text-sm">
         Or{" "}
         <span className="ml-1 text-base underline text-green">
@@ -69,16 +56,16 @@ const ResultCard = ({ book }: BookCardType) => {
         <div
           className="bg-cover bg-center shadow-[5px_5px_20px_rgba(40,53,60,.2)] w-14 h-20"
           style={{
-            backgroundImage: `url(${book.imgUrl})`,
+            backgroundImage: `url(${book.cover})`,
           }}
         ></div>
 
         <div className="ml-6 mr-auto space-y-2 flex-1 max-w-[12rem]">
           <p className="capitalize font-caudex font-bold text-xl leading-6 w-28">
-            {book.title}
+            {book.name}
           </p>
           <p className="text-sm opacity-30">
-            {book.authors.map((author, idx, arr) => (
+            {book.authors?.map((author, idx, arr) => (
               <span key={idx} className="capitalize">
                 {author}
                 {idx < arr.length - 1 && ", "}

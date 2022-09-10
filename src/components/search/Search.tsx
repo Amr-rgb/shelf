@@ -1,5 +1,7 @@
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useDebounce } from "../../hooks/useDebounce";
 import { Results } from "./Results";
 
 type SearchHeaderType = {
@@ -7,14 +9,43 @@ type SearchHeaderType = {
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
+const options = {
+  method: "GET",
+  headers: {
+    "X-RapidAPI-Key": "24d34f98acmshb5a060c30549351p12ce41jsn128c2396fe27",
+    "X-RapidAPI-Host": "hapi-books.p.rapidapi.com",
+  },
+};
+
 export const Search = () => {
   const [searchValue, setSearchValue] = useState("");
+  const debouncedValue = useDebounce(searchValue, 500);
+
+  const [results, setResults] = useState([]);
+
+  useEffect(() => {
+    if (debouncedValue) {
+      axios
+        .get(
+          `https://hapi-books.p.rapidapi.com/search/${debouncedValue
+            .split(" ")
+            .join("+")}`,
+          options
+        )
+        .then((res) => setResults(res.data))
+        .catch((err) => console.error(err));
+    }
+  }, [debouncedValue]);
+
+  useEffect(() => {
+    console.log(results);
+  }, [results]);
 
   return (
     <div>
       <SearchHeader searchValue={searchValue} setSearchValue={setSearchValue} />
 
-      <Results />
+      <Results results={results} />
     </div>
   );
 };
