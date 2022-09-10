@@ -1,43 +1,72 @@
+import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { AddBook } from "./AddBook";
 import { Header } from "./Header";
 
+type bookType = {
+  book_id?: number;
+  name?: string;
+  cover?: string;
+  url?: string;
+  authors?: string[];
+  rating?: number;
+  created_editions?: number;
+  year?: number;
+};
+
+const options = {
+  method: "GET",
+  url: "https://hapi-books.p.rapidapi.com/book/56597885",
+  headers: {
+    "X-RapidAPI-Key": "24d34f98acmshb5a060c30549351p12ce41jsn128c2396fe27",
+    "X-RapidAPI-Host": "hapi-books.p.rapidapi.com",
+  },
+};
+
 export const BookDetails = () => {
   const { bookId } = useParams();
+  const [book, setBook] = useState<bookType>();
+
   const location = useLocation();
   const [loc] = useState(location.pathname.split("/")[1]);
 
-  const details = {
-    book_id: 896220,
-    name: "Close Ups: From The Golden Age Of The Silent Cinema",
-    cover:
-      "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/nophoto/book/111x148._SX50_.png",
-    url: "https://www.goodreads.com/book/show/896220.Close_Ups?from_search=true&from_srp=true&qid=NIsMMSmPhN&rank=16",
-    authors: ["John Richard Finch"],
-    rating: 0,
-    created_editions: 1,
-  };
+  useEffect(() => {
+    axios
+      .get(`https://hapi-books.p.rapidapi.com/book/${bookId}`, options)
+      .then((res) => setBook(res.data))
+      .catch((err) => console.error(err));
+  }, []);
 
-  return (
-    <div>
-      <Header />
+  if (book) {
+    return (
+      <div>
+        <Header title={book.name!} />
 
-      <div className="space-y-8">
-        {loc === "library" ? <UserDetails /> : <AddBook />}
+        <div className="space-y-8">
+          {loc === "library" ? <UserDetails /> : <AddBook />}
 
-        <div className="space-y-6 bg-white p-4 py-8 rounded-xl">
-          <p className="uppercase font-caudex font-bold text-xl text-center">
-            book details
-          </p>
-          <span className="block w-full h-[1px] bg-lightGreen"></span>
-          {Object.entries(details).map(([title, value]) => (
-            <BookDetail key={title} title={title} value={value} />
-          ))}
+          <div className="space-y-6 bg-white p-4 py-8 rounded-xl">
+            <p className="uppercase font-caudex font-bold text-xl text-center">
+              book details
+            </p>
+            <span className="block w-full h-[1px] bg-lightGreen"></span>
+            {Object.entries(book).map(([title, value]) => (
+              <BookDetail key={title} title={title} value={value} />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div>
+        <Header title="Details" />
+
+        <p>no data</p>
+      </div>
+    );
+  }
 };
 
 const BookDetail = ({ title, value }: { title: any; value: any }) => {
