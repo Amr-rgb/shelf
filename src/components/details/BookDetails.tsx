@@ -1,8 +1,18 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
+import { useLibrary } from "../../context/LibraryContext";
 import { AddBook } from "./AddBook";
 import { Header } from "./Header";
+
+type libraryBookType = {
+  id: string;
+  title: string;
+  authors: string[];
+  read: number;
+  pages: number;
+  imgUrl: string;
+};
 
 type bookType = {
   book_id?: number;
@@ -44,7 +54,11 @@ export const BookDetails = () => {
         <Header title={book.name!} />
 
         <div className="space-y-8">
-          {loc === "library" ? <UserDetails /> : <AddBook book={book} />}
+          {loc === "library" ? (
+            <UserDetails bookId={book.book_id!} />
+          ) : (
+            <AddBook book={book} />
+          )}
 
           <div className="space-y-6 bg-white p-4 py-8 rounded-xl">
             <p className="uppercase font-caudex font-bold text-xl text-center">
@@ -95,13 +109,22 @@ const BookDetail = ({ title, value }: { title: any; value: any }) => {
   );
 };
 
-const UserDetails = () => {
+const UserDetails = ({ bookId }: { bookId: number }) => {
+  const [book, setBook] = useState<libraryBookType>();
+  const { getBook } = useLibrary();
+
+  useEffect(() => {
+    setBook(getBook("" + bookId));
+  });
+
   return (
     <div className="bg-white p-8 rounded-xl">
-      <div className="space-y-2">
-        <UserDetail title="pages" value="234" />
-        <UserDetail title="read" value="20" />
-      </div>
+      {book && (
+        <div className="space-y-2">
+          <UserDetail title="pages" value={"" + book.pages} />
+          <UserDetail title="read" value={"" + book.read} />
+        </div>
+      )}
 
       <div className="mt-8 flex space-x-2">
         <button className="flex-1 py-4 px-8 rounded-xl bg-lightGreen">

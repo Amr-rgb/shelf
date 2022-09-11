@@ -1,6 +1,6 @@
 import { Header } from "./Header";
 import { BookCard } from "./../home/Latest";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLibrary } from "../../context/LibraryContext";
 
 type bookType = {
@@ -14,6 +14,7 @@ type bookType = {
 
 export const Library = () => {
   const { library: books } = useLibrary();
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -22,7 +23,11 @@ export const Library = () => {
       {books.length ? (
         <div className="space-y-6">
           {books.map((book) => (
-            <div key={book.id} className="bg-white p-4 rounded-lg space-y-2">
+            <div
+              key={book.id}
+              className="bg-white p-4 rounded-lg space-y-2 cursor-pointer"
+              onClick={() => navigate(book.id)}
+            >
               <BookCard book={book} />
             </div>
           ))}

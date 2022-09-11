@@ -17,6 +17,7 @@ type bookType = {
 
 type LibraryContextType = {
   library: bookType[];
+  getBook: (bookId: string) => bookType;
   addToLibrary: (book: bookType) => void;
 };
 
@@ -38,6 +39,10 @@ export const LibraryContextProvider = ({
     json && setLibrary(JSON.parse(json));
   }, []);
 
+  const getBook = (bookId: string) => {
+    return library.find((b) => b.id === bookId)!;
+  };
+
   const addToLibrary = (book: bookType) => {
     setLibrary((prev: any) => {
       const newLibrary = prev.concat(book);
@@ -47,7 +52,7 @@ export const LibraryContextProvider = ({
   };
 
   return (
-    <LibraryContext.Provider value={{ library, addToLibrary }}>
+    <LibraryContext.Provider value={{ library, getBook, addToLibrary }}>
       {children}
     </LibraryContext.Provider>
   );
