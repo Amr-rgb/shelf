@@ -20,6 +20,7 @@ type LibraryContextType = {
   getBook: (bookId: string) => bookType;
   addToLibrary: (book: bookType) => void;
   deleteFromLibrary: (bookId: string) => void;
+  editBook: (bookId: string, pages: number, read: number) => void;
 };
 
 const LibraryContext = createContext({} as LibraryContextType);
@@ -60,9 +61,20 @@ export const LibraryContextProvider = ({
     });
   };
 
+  const editBook = (bookId: string, pages: number, read: number) => {
+    setLibrary((prev: any) => {
+      const newLibrary = prev.map((book: bookType) => {
+        if (book.id === bookId) return { ...book, pages, read };
+        else return book;
+      });
+      window.localStorage.setItem("library", JSON.stringify(newLibrary));
+      return newLibrary;
+    });
+  };
+
   return (
     <LibraryContext.Provider
-      value={{ library, getBook, addToLibrary, deleteFromLibrary }}
+      value={{ library, getBook, addToLibrary, deleteFromLibrary, editBook }}
     >
       {children}
     </LibraryContext.Provider>

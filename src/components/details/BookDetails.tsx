@@ -112,30 +112,49 @@ const BookDetail = ({ title, value }: { title: any; value: any }) => {
 const UserDetails = ({ bookId }: { bookId: number }) => {
   const navigate = useNavigate();
 
-  const { getBook, deleteFromLibrary } = useLibrary();
+  const { getBook, deleteFromLibrary, editBook } = useLibrary();
   const [book, setBook] = useState<libraryBookType>(getBook("" + bookId));
 
   useEffect(() => {
     setBook(getBook("" + bookId));
   });
 
+  const [values, setValues] = useState<{ pages: number; read: number }>({
+    pages: 0,
+    read: 0,
+  });
+
+  const getValues = (pages: number, read: number) => {
+    setValues({ pages, read });
+  };
+
   return (
     <div className="bg-white p-8 rounded-xl">
       {book && (
         <div className="space-y-2">
-          <LibraryBookDetails val1={book.pages} val2={book.read} />
+          <LibraryBookDetails
+            val1={book.pages}
+            val2={book.read}
+            getValues={getValues}
+          />
         </div>
       )}
 
       <div className="mt-8 flex space-x-2">
-        <button className="flex-1 py-4 px-8 rounded-xl bg-lightGreen">
+        <button
+          className="flex-1 py-4 px-8 rounded-xl bg-lightGreen"
+          onClick={() => {
+            editBook("" + bookId, values.pages, values.read);
+            setTimeout(() => navigate(-1), 500);
+          }}
+        >
           Save
         </button>
         <button
           className="flex-1 py-4 px-8 rounded-xl bg-[#f00] text-white"
           onClick={() => {
             deleteFromLibrary("" + bookId);
-            navigate(-1);
+            setTimeout(() => navigate(-1), 500);
           }}
         >
           Delete
@@ -145,7 +164,17 @@ const UserDetails = ({ bookId }: { bookId: number }) => {
   );
 };
 
-const LibraryBookDetails = ({ val1, val2 }: { val1: number; val2: number }) => {
+type LibraryBookDetailsType = {
+  val1: number;
+  val2: number;
+  getValues: (pages: number, read: number) => void;
+};
+
+const LibraryBookDetails = ({
+  val1,
+  val2,
+  getValues,
+}: LibraryBookDetailsType) => {
   const [active1, setActive1] = useState(false);
   const [active2, setActive2] = useState(false);
   let input1 = useRef<HTMLInputElement>(null);
@@ -170,6 +199,10 @@ const LibraryBookDetails = ({ val1, val2 }: { val1: number; val2: number }) => {
   useEffect(() => {
     active2 && input2.current?.focus();
   }, [active2]);
+
+  useEffect(() => {
+    getValues(Number(value1), Number(value2));
+  }, [value1, value2]);
 
   return (
     <>
