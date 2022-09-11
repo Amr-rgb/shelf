@@ -1,10 +1,10 @@
 type bookType = {
   id: string;
   title: string;
-  authors: string[];
+  authors?: string[];
   read: number;
   pages: number;
-  imgUrl: string;
+  imgUrl?: string;
 };
 
 type BookCardType = {
@@ -64,7 +64,7 @@ export const BookCard = ({ book }: BookCardType) => {
           {book.title}
         </p>
         <p className="text-sm opacity-30">
-          {book.authors.map((author, idx, arr) => (
+          {book.authors?.map((author, idx, arr) => (
             <span key={idx} className="capitalize">
               {author}
               {idx < arr.length - 1 && ", "}
