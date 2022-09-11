@@ -112,8 +112,8 @@ const BookDetail = ({ title, value }: { title: any; value: any }) => {
 const UserDetails = ({ bookId }: { bookId: number }) => {
   const navigate = useNavigate();
 
-  const [book, setBook] = useState<libraryBookType>();
   const { getBook, deleteFromLibrary } = useLibrary();
+  const [book, setBook] = useState<libraryBookType>(getBook("" + bookId));
 
   useEffect(() => {
     setBook(getBook("" + bookId));
@@ -123,8 +123,7 @@ const UserDetails = ({ bookId }: { bookId: number }) => {
     <div className="bg-white p-8 rounded-xl">
       {book && (
         <div className="space-y-2">
-          <UserDetail title="pages" value={"" + book.pages} />
-          <UserDetail title="read" value={"" + book.read} />
+          <LibraryBookDetails val1={book.pages} val2={book.read} />
         </div>
       )}
 
@@ -146,38 +145,71 @@ const UserDetails = ({ bookId }: { bookId: number }) => {
   );
 };
 
-const UserDetail = ({ title, value }: { title: string; value: string }) => {
-  const [active, setActive] = useState(false);
-  const [val, setVal] = useState(value);
-  let input = useRef<HTMLInputElement>(null);
+const LibraryBookDetails = ({ val1, val2 }: { val1: number; val2: number }) => {
+  const [active1, setActive1] = useState(false);
+  const [active2, setActive2] = useState(false);
+  let input1 = useRef<HTMLInputElement>(null);
+  let input2 = useRef<HTMLInputElement>(null);
 
-  const clickHandler = () => {
-    setActive(true);
-    input.current?.focus();
+  const [value1, setValue1] = useState("" + val1);
+  const [value2, setValue2] = useState("" + val2);
+
+  const clickHandler1 = () => {
+    setActive1(true);
+    input1.current?.focus();
+  };
+  const clickHandler2 = () => {
+    setActive2(true);
+    input2.current?.focus();
   };
 
   useEffect(() => {
-    active && input.current?.focus();
-  }, [active]);
+    active1 && input1.current?.focus();
+  }, [active1]);
+
+  useEffect(() => {
+    active2 && input2.current?.focus();
+  }, [active2]);
 
   return (
-    <div className="flex items-center">
-      <p className="w-16">{title}</p>
-      <input
-        ref={input}
-        className="ml-4 mr-auto p-3 w-32"
-        type="text"
-        value={val}
-        onChange={(e) => setVal(e.target.value)}
-        disabled={!active}
-      />
+    <>
+      <div className="flex items-center">
+        <p className="w-16">pages</p>
+        <input
+          ref={input1}
+          className="ml-4 mr-auto p-3 w-32"
+          type="text"
+          value={value1}
+          onChange={(e) => setValue1(e.target.value)}
+          disabled={!active1}
+        />
 
-      <button
-        className="p-2 px-4 bg-lightGreen text-green rounded-lg"
-        onClick={clickHandler}
-      >
-        Edit
-      </button>
-    </div>
+        <button
+          className="p-2 px-4 bg-lightGreen text-green rounded-lg"
+          onClick={clickHandler1}
+        >
+          Edit
+        </button>
+      </div>
+
+      <div className="flex items-center">
+        <p className="w-16">read</p>
+        <input
+          ref={input2}
+          className="ml-4 mr-auto p-3 w-32"
+          type="text"
+          value={value2}
+          onChange={(e) => setValue2(e.target.value)}
+          disabled={!active2}
+        />
+
+        <button
+          className="p-2 px-4 bg-lightGreen text-green rounded-lg"
+          onClick={clickHandler2}
+        >
+          Edit
+        </button>
+      </div>
+    </>
   );
 };
