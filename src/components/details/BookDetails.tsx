@@ -44,7 +44,7 @@ export const BookDetails = () => {
         <Header title={book.name!} />
 
         <div className="space-y-8">
-          {loc === "library" ? <UserDetails /> : <AddBook />}
+          {loc === "library" ? <UserDetails /> : <AddBook book={book} />}
 
           <div className="space-y-6 bg-white p-4 py-8 rounded-xl">
             <p className="uppercase font-caudex font-bold text-xl text-center">

@@ -1,4 +1,16 @@
 import { useState } from "react";
+import { useLibrary } from "../../context/LibraryContext";
+
+type bookType = {
+  book_id?: number;
+  name?: string;
+  cover?: string;
+  url?: string;
+  authors?: string[];
+  rating?: number;
+  created_editions?: number;
+  year?: number;
+};
 
 type FormType = {
   pagesValue: string;
@@ -7,10 +19,25 @@ type FormType = {
   setReadValue: (val: string) => void;
 };
 
-export const AddBook = () => {
+export const AddBook = ({ book }: { book: bookType }) => {
   const [open, setOpen] = useState(false);
   const [pagesValue, setPagesValue] = useState("");
   const [readValue, setReadValue] = useState("");
+
+  const { addToLibrary } = useLibrary();
+
+  const clickHandler = () => {
+    const ourBook = {
+      id: "" + book.book_id,
+      title: book.name!,
+      authors: book.authors!,
+      pages: Number(pagesValue),
+      read: Number(readValue),
+      imgUrl: book.cover!,
+    };
+
+    addToLibrary(ourBook);
+  };
 
   return (
     <div>
@@ -34,7 +61,10 @@ export const AddBook = () => {
           setReadValue={setReadValue}
         />
 
-        <button className="flex items-center justify-center space-x-4 w-full py-4 mt-8 rounded-xl bg-lightGreen font-medium text-sm">
+        <button
+          className="flex items-center justify-center space-x-4 w-full py-4 mt-8 rounded-xl bg-lightGreen font-medium text-sm"
+          onClick={clickHandler}
+        >
           <span>Add To Library</span>{" "}
           <span className="text-xl bg-green text-white w-6 h-6 rounded-md flex items-center justify-center">
             +

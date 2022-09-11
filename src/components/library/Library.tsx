@@ -1,6 +1,7 @@
 import { Header } from "./Header";
 import { BookCard } from "./../home/Latest";
 import { Link } from "react-router-dom";
+import { useLibrary } from "../../context/LibraryContext";
 
 type bookType = {
   id: string;
@@ -12,26 +13,7 @@ type bookType = {
 };
 
 export const Library = () => {
-  const books: bookType[] = [
-    {
-      id: "1",
-      title: "The Goldfinch",
-      authors: ["Donna Tartt"],
-      read: 124,
-      pages: 200,
-      imgUrl:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_hNKNOpY_W-Xlr_O6cCppzUX-fxkDKK88GEem1-kFdsAMNRTX5rjd5AkLAkh_J_GBBIc&usqp=CAU",
-    },
-    {
-      id: "2",
-      title: "The Goldfinch",
-      authors: ["Donna Tartt"],
-      read: 113,
-      pages: 300,
-      imgUrl:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_hNKNOpY_W-Xlr_O6cCppzUX-fxkDKK88GEem1-kFdsAMNRTX5rjd5AkLAkh_J_GBBIc&usqp=CAU",
-    },
-  ];
+  const { library: books } = useLibrary();
 
   return (
     <div>
