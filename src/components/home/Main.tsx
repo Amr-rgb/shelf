@@ -1,3 +1,5 @@
+import { useLibrary } from "../../context/LibraryContext";
+
 export const Main = () => {
   return (
     <div className="space-y-12">
@@ -24,6 +26,8 @@ const Header = () => {
 };
 
 const Statistics = () => {
+  const { statistics } = useLibrary();
+
   return (
     <div>
       <p className="mb-6 text-sm">
@@ -32,11 +36,15 @@ const Statistics = () => {
       </p>
       <div className="py-8 bg-white rounded-2xl flex items-center justify-center space-x-20">
         <div className="text-center">
-          <p className="font-caudex font-bold text-3xl text-green">{50}</p>
+          <p className="font-caudex font-bold text-3xl text-green">
+            {statistics.books}
+          </p>
           <p className="font-medium text-xs opacity-30">Books</p>
         </div>
         <div className="text-center">
-          <p className="font-caudex font-bold text-3xl text-green">{932}</p>
+          <p className="font-caudex font-bold text-3xl text-green">
+            {statistics.read}
+          </p>
           <p className="font-medium text-xs opacity-30">Pages</p>
         </div>
       </div>

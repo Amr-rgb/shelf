@@ -18,6 +18,7 @@ type bookType = {
 
 type LibraryContextType = {
   library: bookType[];
+  statistics: { books: number; read: number };
   getBook: (bookId: string) => bookType;
   addToLibrary: (book: bookType) => void;
   deleteFromLibrary: (bookId: string) => void;
@@ -41,6 +42,17 @@ export const LibraryContextProvider = ({
     const json = window.localStorage.getItem("library");
     json && setLibrary(JSON.parse(json));
   }, []);
+
+  const [statistics, setStatistics] = useState({ books: 0, read: 0 });
+
+  const getReadPages = () =>
+    library.reduce((prev: any, curr: any) => {
+      return prev + curr.read;
+    }, 0);
+
+  useEffect(() => {
+    setStatistics({ books: library.length, read: getReadPages() });
+  }, [library]);
 
   const getBook = (bookId: string) => {
     return library.find((b) => b.id === bookId)!;
@@ -75,7 +87,14 @@ export const LibraryContextProvider = ({
 
   return (
     <LibraryContext.Provider
-      value={{ library, getBook, addToLibrary, deleteFromLibrary, editBook }}
+      value={{
+        library,
+        statistics,
+        getBook,
+        addToLibrary,
+        deleteFromLibrary,
+        editBook,
+      }}
     >
       {children}
     </LibraryContext.Provider>
