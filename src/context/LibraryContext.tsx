@@ -64,6 +64,7 @@ export const LibraryContextProvider = ({
     setLibrary((prev: any) => {
       const newLibrary = prev.concat(book);
       window.localStorage.setItem("library", JSON.stringify(newLibrary));
+      setTimeout(() => showMessage(true, "Your Book Added Successfully"), 500);
       return newLibrary;
     });
   };
@@ -72,6 +73,10 @@ export const LibraryContextProvider = ({
     setLibrary((prev: any) => {
       const newLibrary = prev.filter((b: bookType) => b.id !== bookId);
       window.localStorage.setItem("library", JSON.stringify(newLibrary));
+      setTimeout(
+        () => showMessage(true, "Your Book Deleted Successfully"),
+        500
+      );
       return newLibrary;
     });
   };
@@ -83,6 +88,7 @@ export const LibraryContextProvider = ({
         else return book;
       });
       window.localStorage.setItem("library", JSON.stringify(newLibrary));
+      setTimeout(() => showMessage(true, "Your Edits Saved Successfully"), 500);
       return newLibrary;
     });
   };
