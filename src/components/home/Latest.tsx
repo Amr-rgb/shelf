@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import { useLibrary } from "../../context/LibraryContext";
+
 type bookType = {
   id: string;
   title: string;
@@ -12,35 +15,26 @@ type BookCardType = {
 };
 
 export const Latest = () => {
-  const latestBooks = [
-    {
-      id: "1",
-      title: "The Goldfinch",
-      authors: ["Donna Tartt"],
-      read: 124,
-      pages: 200,
-      imgUrl:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_hNKNOpY_W-Xlr_O6cCppzUX-fxkDKK88GEem1-kFdsAMNRTX5rjd5AkLAkh_J_GBBIc&usqp=CAU",
-    },
-    {
-      id: "2",
-      title: "The Goldfinch",
-      authors: ["Donna Tartt"],
-      read: 113,
-      pages: 300,
-      imgUrl:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_hNKNOpY_W-Xlr_O6cCppzUX-fxkDKK88GEem1-kFdsAMNRTX5rjd5AkLAkh_J_GBBIc&usqp=CAU",
-    },
-  ];
+  const { library } = useLibrary();
+  const latestBooks = library.slice(0, 2);
 
   return (
     <div className="mt-14">
       <p className="mb-8 font-bold text-green">Continue Reading</p>
-      <div className="space-y-12">
-        {latestBooks.map((book) => (
-          <BookCard key={book.id} book={book} />
-        ))}
-      </div>
+      {latestBooks.length ? (
+        <div className="space-y-12">
+          {latestBooks.map((book) => (
+            <BookCard key={book.id} book={book} />
+          ))}
+        </div>
+      ) : (
+        <div className="mt-20 flex flex-col items-center justify-center">
+          You Have No Books Yet
+          <Link to="/search" className="mt-2 text-lg text-cyan-600 underline">
+            Try Searching For Some
+          </Link>
+        </div>
+      )}
     </div>
   );
 };
