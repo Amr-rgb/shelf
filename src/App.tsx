@@ -6,8 +6,12 @@ import { Library } from "./components/library/Library";
 import { BookDetails } from "./components/details/BookDetails";
 import { useEffect } from "react";
 import { AddCustomBook } from "./components/details/AddCustomBook";
+import { Toast } from "./components/Toast";
+import { useLibrary } from "./context/LibraryContext";
 
 function App() {
+  const { toast } = useLibrary();
+
   const location = useLocation();
 
   useEffect(() => {
@@ -22,6 +26,12 @@ function App() {
 
   return (
     <div className="App px-4 py-8 pb-44">
+      <Toast
+        show={toast?.show!}
+        success={toast?.success!}
+        message={toast?.message!}
+      />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/search">

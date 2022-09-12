@@ -19,10 +19,12 @@ type bookType = {
 type LibraryContextType = {
   library: bookType[];
   statistics: { books: number; read: number };
+  toast: { show: boolean; success: boolean; message: string } | undefined;
   getBook: (bookId: string) => bookType;
   addToLibrary: (book: bookType) => void;
   deleteFromLibrary: (bookId: string) => void;
   editBook: (bookId: string, pages: number, read: number) => void;
+  showMessage: (success: boolean, message: string) => void;
 };
 
 const LibraryContext = createContext({} as LibraryContextType);
@@ -85,15 +87,26 @@ export const LibraryContextProvider = ({
     });
   };
 
+  const [toast, setToast] = useState<
+    { show: boolean; success: boolean; message: string } | undefined
+  >();
+
+  const showMessage = (success: boolean, message: string) => {
+    setToast({ show: true, success, message });
+    setTimeout(() => setToast({ show: false, success, message }), 2500);
+  };
+
   return (
     <LibraryContext.Provider
       value={{
         library,
         statistics,
+        toast,
         getBook,
         addToLibrary,
         deleteFromLibrary,
         editBook,
+        showMessage,
       }}
     >
       {children}

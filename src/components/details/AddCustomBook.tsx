@@ -19,7 +19,7 @@ export const AddCustomBook = () => {
   const [pagesValue, setPagesValue] = useState("");
   const [readValue, setReadValue] = useState("");
 
-  const { addToLibrary } = useLibrary();
+  const { addToLibrary, showMessage } = useLibrary();
 
   const clickHandler = () => {
     const ourBook = {
@@ -32,7 +32,10 @@ export const AddCustomBook = () => {
     };
 
     addToLibrary(ourBook);
-    setTimeout(() => navigate("/library"), 500);
+    setTimeout(() => {
+      showMessage(true, "Your Book Added Successfully");
+      navigate("/library");
+    }, 500);
   };
 
   return (
