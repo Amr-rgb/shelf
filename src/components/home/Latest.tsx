@@ -49,7 +49,7 @@ export const BookCard = ({ book }: BookCardType) => {
   return (
     <div
       className="flex items-center cursor-pointer"
-      onClick={() => navigate(`library/${book.id}`)}
+      onClick={() => navigate(`/library/${book.id}`)}
     >
       {book.imgUrl ? (
         <div

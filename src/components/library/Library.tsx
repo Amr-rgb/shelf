@@ -26,7 +26,6 @@ export const Library = () => {
             <div
               key={book.id}
               className="bg-white p-4 rounded-lg space-y-2 cursor-pointer"
-              onClick={() => navigate(book.id)}
             >
               <BookCard book={book} />
             </div>
