@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLibrary } from "../../context/LibraryContext";
 
 type bookType = {
@@ -40,12 +40,17 @@ export const Latest = () => {
 };
 
 export const BookCard = ({ book }: BookCardType) => {
+  const navigate = useNavigate();
+
   const percentage: number = Number(
     ((book.read / book.pages) * 100).toFixed(0)
   );
 
   return (
-    <div className="flex items-center">
+    <div
+      className="flex items-center cursor-pointer"
+      onClick={() => navigate(`library/${book.id}`)}
+    >
       {book.imgUrl ? (
         <div
           className="bg-cover bg-center shadow-[5px_5px_20px_rgba(40,53,60,.2)] w-14 h-20"
