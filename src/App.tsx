@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { AddCustomBook } from "./components/details/AddCustomBook";
 import { Toast } from "./components/Toast";
 import { useLibrary } from "./context/LibraryContext";
+import { AnimatePresence } from "framer-motion";
 
 function App() {
   const { toast } = useLibrary();
@@ -32,18 +33,20 @@ function App() {
         message={toast?.message!}
       />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/search">
-          <Route index element={<Search />} />
-          <Route path=":bookId" element={<BookDetails />} />
-          <Route path="custom" element={<AddCustomBook />} />
-        </Route>
-        <Route path="/library">
-          <Route index element={<Library />} />
-          <Route path=":bookId" element={<BookDetails />} />
-        </Route>
-      </Routes>
+      <AnimatePresence exitBeforeEnter>
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<Home />} />
+          <Route path="/search">
+            <Route index element={<Search />} />
+            <Route path=":bookId" element={<BookDetails />} />
+            <Route path="custom" element={<AddCustomBook />} />
+          </Route>
+          <Route path="/library">
+            <Route index element={<Library />} />
+            <Route path=":bookId" element={<BookDetails />} />
+          </Route>
+        </Routes>
+      </AnimatePresence>
 
       <Navbar />
     </div>

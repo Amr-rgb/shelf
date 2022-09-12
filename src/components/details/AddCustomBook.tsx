@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLibrary } from "../../context/LibraryContext";
 import { Header } from "./Header";
+import { motion } from "framer-motion";
 
 type FormType = {
   title: string;
@@ -39,7 +40,11 @@ export const AddCustomBook = () => {
   };
 
   return (
-    <div>
+    <motion.div
+      initial={{ x: "-100%" }}
+      animate={{ x: 0, transition: { duration: 0.3 } }}
+      exit={{ opacity: 0, transition: { duration: 0.2 } }}
+    >
       <Header title="Add Custom Book" />
 
       <div className={`bg-white p-8 rounded-xl ${!open ? "hidden" : ""}`}>
@@ -62,7 +67,7 @@ export const AddCustomBook = () => {
           </span>
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -2,6 +2,7 @@ import { Header } from "./Header";
 import { BookCard } from "./../home/Latest";
 import { Link, useNavigate } from "react-router-dom";
 import { useLibrary } from "../../context/LibraryContext";
+import { motion } from "framer-motion";
 
 type bookType = {
   id: string;
@@ -17,7 +18,11 @@ export const Library = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <motion.div
+      initial={{ x: "-100%" }}
+      animate={{ x: 0, transition: { duration: 0.3 } }}
+      exit={{ opacity: 0, transition: { duration: 0.2 } }}
+    >
       <Header />
 
       {books.length ? (
@@ -39,6 +44,6 @@ export const Library = () => {
           </Link>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };

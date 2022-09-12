@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
 import { Results } from "./Results";
+import { motion } from "framer-motion";
 
 type SearchHeaderType = {
   searchValue: string;
@@ -53,11 +54,15 @@ export const Search = () => {
   }, [debouncedValue]);
 
   return (
-    <div>
+    <motion.div
+      initial={{ x: "-100%" }}
+      animate={{ x: 0, transition: { duration: 0.3 } }}
+      exit={{ opacity: 0, transition: { duration: 0.2 } }}
+    >
       <SearchHeader searchValue={searchValue} setSearchValue={setSearchValue} />
 
       <Results res={results} searchValue={searchValue} isLoading={isLoading} />
-    </div>
+    </motion.div>
   );
 };
 

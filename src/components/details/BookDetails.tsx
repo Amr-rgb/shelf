@@ -4,6 +4,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useLibrary } from "../../context/LibraryContext";
 import { AddBook } from "./AddBook";
 import { Header } from "./Header";
+import { motion } from "framer-motion";
 
 type libraryBookType = {
   custom?: boolean;
@@ -74,7 +75,11 @@ export const BookDetails = () => {
 
   if (book) {
     return (
-      <div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { duration: 0.3 } }}
+        exit={{ opacity: 0, transition: { duration: 0.2 } }}
+      >
         <Header title={book.name!} />
 
         <div className="space-y-8">
@@ -94,11 +99,15 @@ export const BookDetails = () => {
             ))}
           </div>
         </div>
-      </div>
+      </motion.div>
     );
   } else {
     return (
-      <div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { duration: 0.3 } }}
+        exit={{ opacity: 0, transition: { duration: 0.2 } }}
+      >
         <Header title="Details" />
 
         {isLoading ? (
@@ -114,7 +123,7 @@ export const BookDetails = () => {
             <p>Unable to load details</p>
           </div>
         )}
-      </div>
+      </motion.div>
     );
   }
 };
