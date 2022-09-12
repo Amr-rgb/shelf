@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useLibrary } from "../../context/LibraryContext";
 
 type bookType = {
@@ -20,6 +21,8 @@ type FormType = {
 };
 
 export const AddBook = ({ book }: { book: bookType }) => {
+  const navigate = useNavigate();
+
   const [open, setOpen] = useState(false);
   const [pagesValue, setPagesValue] = useState("");
   const [readValue, setReadValue] = useState("");
@@ -37,6 +40,7 @@ export const AddBook = ({ book }: { book: bookType }) => {
     };
 
     addToLibrary(ourBook);
+    navigate(-1);
   };
 
   return (
