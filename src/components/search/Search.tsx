@@ -23,6 +23,7 @@ export const Search = () => {
   );
   const debouncedValue = useDebounce(searchValue, 500);
 
+  const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState([]);
 
   useEffect(() => {
@@ -32,6 +33,7 @@ export const Search = () => {
 
   useEffect(() => {
     if (debouncedValue && !window.sessionStorage.getItem("searchValue")) {
+      setIsLoading(true);
       axios
         .get(
           `https://hapi-books.p.rapidapi.com/search/${debouncedValue
@@ -39,7 +41,10 @@ export const Search = () => {
             .join("+")}`,
           options
         )
-        .then((res) => setResults(res.data))
+        .then((res) => {
+          setIsLoading(false);
+          setResults(res.data);
+        })
         .catch((err) => console.error(err));
     }
   }, [debouncedValue]);
@@ -48,7 +53,7 @@ export const Search = () => {
     <div>
       <SearchHeader searchValue={searchValue} setSearchValue={setSearchValue} />
 
-      <Results res={results} searchValue={searchValue} />
+      <Results res={results} searchValue={searchValue} isLoading={isLoading} />
     </div>
   );
 };

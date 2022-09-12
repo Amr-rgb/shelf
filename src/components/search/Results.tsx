@@ -20,9 +20,10 @@ type BookCardType = {
 type ResultsType = {
   res: bookType[];
   searchValue: string;
+  isLoading: boolean;
 };
 
-export const Results = ({ res, searchValue }: ResultsType) => {
+export const Results = ({ res, searchValue, isLoading }: ResultsType) => {
   const [results, setResults] = useState<bookType[]>(
     JSON.parse(window.sessionStorage.getItem("books")!)
   );
@@ -37,7 +38,17 @@ export const Results = ({ res, searchValue }: ResultsType) => {
     <div className="mt-14">
       <ResultsHeader number={results?.length || 0} />
 
-      {results && (
+      {isLoading && (
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+          <img
+            className="animate-spin w-10 h-10"
+            src="/loading.svg"
+            alt="loading"
+          />
+        </div>
+      )}
+
+      {!isLoading && results && (
         <div className="mt-10 space-y-6">
           {results.map((res) => (
             <ResultCard

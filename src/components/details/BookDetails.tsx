@@ -45,16 +45,26 @@ export const BookDetails = () => {
   const { getBook } = useLibrary();
   const [libBook] = useState(getBook("" + bookId));
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     if (loc === "library" && libBook.custom) {
-      setBook({
-        book_id: Number(libBook.id),
-        name: libBook.title,
-      });
+      const timeOut = setTimeout(() => {
+        setIsLoading(false);
+        setBook({
+          book_id: Number(libBook.id),
+          name: libBook.title,
+        });
+      }, 500);
+
+      return () => clearTimeout(timeOut);
     } else {
       axios
         .get(`https://hapi-books.p.rapidapi.com/book/${bookId}`, options)
-        .then((res) => setBook(res.data))
+        .then((res) => {
+          setIsLoading(false);
+          setBook(res.data);
+        })
         .catch((err) => console.error(err));
     }
   }, []);
@@ -88,7 +98,19 @@ export const BookDetails = () => {
       <div>
         <Header title="Details" />
 
-        <p>no data</p>
+        {isLoading ? (
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+            <img
+              className="animate-spin w-10 h-10"
+              src="/loading.svg"
+              alt="loading"
+            />
+          </div>
+        ) : (
+          <div className="text-center py-32">
+            <p>Unable to load details</p>
+          </div>
+        )}
       </div>
     );
   }
