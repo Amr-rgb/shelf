@@ -59,7 +59,9 @@ export const BookCard = ({ book }: BookCardType) => {
           }}
         ></div>
       ) : (
-        <div className="shadow-[5px_5px_20px_rgba(40,53,60,.2)] w-14 h-20 bg-lightGreen"></div>
+        <div className="shadow-[5px_5px_20px_rgba(40,53,60,.2)] w-14 h-20 bg-lightGreen flex items-center justify-center">
+          <p className="font-bold text-4xl opacity-10 select-none">B</p>
+        </div>
       )}
 
       <div className="ml-6 mr-auto space-y-2 flex-1 max-w-[12rem]">
