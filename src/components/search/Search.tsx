@@ -45,7 +45,10 @@ export const Search = () => {
           setIsLoading(false);
           setResults(res.data);
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          setIsLoading(false);
+          console.error(err);
+        });
     }
   }, [debouncedValue]);
 

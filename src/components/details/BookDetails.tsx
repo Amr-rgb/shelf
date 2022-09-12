@@ -65,7 +65,10 @@ export const BookDetails = () => {
           setIsLoading(false);
           setBook(res.data);
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          setIsLoading(false);
+          console.error(err);
+        });
     }
   }, []);
 
