@@ -5,6 +5,7 @@ import { Search } from "./components/search/Search";
 import { Library } from "./components/library/Library";
 import { BookDetails } from "./components/details/BookDetails";
 import { useEffect } from "react";
+import { AddCustomBook } from "./components/details/AddCustomBook";
 
 function App() {
   const location = useLocation();
@@ -26,6 +27,7 @@ function App() {
         <Route path="/search">
           <Route index element={<Search />} />
           <Route path=":bookId" element={<BookDetails />} />
+          <Route path="custom" element={<AddCustomBook />} />
         </Route>
         <Route path="/library">
           <Route index element={<Library />} />

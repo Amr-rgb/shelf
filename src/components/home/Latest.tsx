@@ -52,12 +52,16 @@ export const BookCard = ({ book }: BookCardType) => {
 
   return (
     <div className="flex items-center">
-      <div
-        className="bg-cover bg-center shadow-[5px_5px_20px_rgba(40,53,60,.2)] w-14 h-20"
-        style={{
-          backgroundImage: `url(${book.imgUrl})`,
-        }}
-      ></div>
+      {book.imgUrl ? (
+        <div
+          className="bg-cover bg-center shadow-[5px_5px_20px_rgba(40,53,60,.2)] w-14 h-20"
+          style={{
+            backgroundImage: `url(${book.imgUrl})`,
+          }}
+        ></div>
+      ) : (
+        <div className="shadow-[5px_5px_20px_rgba(40,53,60,.2)] w-14 h-20 bg-lightGreen"></div>
+      )}
 
       <div className="ml-6 mr-auto space-y-2 flex-1 max-w-[12rem]">
         <p className="capitalize font-caudex font-bold text-xl leading-6 w-28">

@@ -6,9 +6,10 @@ import { AddBook } from "./AddBook";
 import { Header } from "./Header";
 
 type libraryBookType = {
+  custom?: boolean;
   id: string;
   title: string;
-  authors: string[];
+  authors?: string[];
   read: number;
   pages: number;
   imgUrl: string;
@@ -41,11 +42,21 @@ export const BookDetails = () => {
   const location = useLocation();
   const [loc] = useState(location.pathname.split("/")[1]);
 
+  const { getBook } = useLibrary();
+  const [libBook] = useState(getBook("" + bookId));
+
   useEffect(() => {
-    axios
-      .get(`https://hapi-books.p.rapidapi.com/book/${bookId}`, options)
-      .then((res) => setBook(res.data))
-      .catch((err) => console.error(err));
+    if (loc === "library" && libBook.custom) {
+      setBook({
+        book_id: Number(libBook.id),
+        name: libBook.title,
+      });
+    } else {
+      axios
+        .get(`https://hapi-books.p.rapidapi.com/book/${bookId}`, options)
+        .then((res) => setBook(res.data))
+        .catch((err) => console.error(err));
+    }
   }, []);
 
   if (book) {

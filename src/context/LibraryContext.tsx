@@ -7,9 +7,10 @@ import {
 } from "react";
 
 type bookType = {
+  custom?: boolean;
   id: string;
   title: string;
-  authors: string[];
+  authors?: string[];
   read: number;
   pages: number;
   imgUrl: string;

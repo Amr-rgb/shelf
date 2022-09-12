@@ -53,12 +53,17 @@ export const Results = ({ res, searchValue }: ResultsType) => {
 };
 
 const ResultsHeader = ({ number }: { number: number }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="flex justify-between">
       <h1 className="font-bold text-lg">Results: {number}</h1>
       <p className="text-sm">
         Or{" "}
-        <span className="ml-1 text-base underline text-green">
+        <span
+          className="ml-1 text-base underline text-green cursor-pointer"
+          onClick={() => navigate("custom")}
+        >
           Add Custom Book
         </span>
       </p>
