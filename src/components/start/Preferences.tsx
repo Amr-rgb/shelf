@@ -35,7 +35,7 @@ export const Preferences = () => {
         <img src="/logo.svg" alt="logo" />
       </div>
 
-      <div className="mt-24 flex flex-col items-center">
+      <div className="mt-32 flex flex-col items-center">
         <p className="mb-20 text-center font-bold text-lg">
           Select Your Preferences
         </p>

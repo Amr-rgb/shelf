@@ -18,7 +18,9 @@ export const Navbar = () => {
   return (
     <div
       className="nav z-50 py-4 pb-6 fixed bottom-0 left-0 right-0"
-      style={{ display: active === "/" ? "none" : "block" }}
+      style={{
+        display: active === "/" || active === "/preferences" ? "none" : "block",
+      }}
     >
       <div className="px-4 flex items-center justify-between">
         <button
