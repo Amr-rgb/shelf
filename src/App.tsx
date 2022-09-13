@@ -38,7 +38,7 @@ function App() {
         message={toast?.message!}
       />
 
-      <AnimatePresence exitBeforeEnter>
+      <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Start />} />
           <Route path="/preferences" element={<Preferences />} />
