@@ -25,7 +25,11 @@ export const Start = () => {
         <h1 className="font-play font-bold text-6xl text-center leading-tight">
           Track Your Readings In One Place
         </h1>
-        <Link to="/preferences">
+        <Link
+          to={`${
+            window.localStorage.getItem("userName") ? "/home" : "/preferences"
+          }`}
+        >
           <button className="bg-offWhite w-60 py-5 rounded-2xl font-semibold text-lg">
             Let&#39;s Start
           </button>

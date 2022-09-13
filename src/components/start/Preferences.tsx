@@ -29,6 +29,12 @@ export const Preferences = () => {
     }
   };
 
+  useEffect(() => {
+    if (window.localStorage.getItem("userName")) {
+      navigate("/home");
+    }
+  });
+
   return (
     <div>
       <div>
