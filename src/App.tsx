@@ -9,6 +9,7 @@ import { AddCustomBook } from "./components/details/AddCustomBook";
 import { Toast } from "./components/Toast";
 import { useLibrary } from "./context/LibraryContext";
 import { AnimatePresence } from "framer-motion";
+import { Start } from "./components/start/Start";
 
 function App() {
   const { toast } = useLibrary();
@@ -26,7 +27,10 @@ function App() {
   }, [location]);
 
   return (
-    <div className="App px-4 py-8 pb-44">
+    <div
+      className="App px-4 py-8"
+      style={{ paddingBottom: location.pathname === "/" ? "0" : "11rem" }}
+    >
       <Toast
         show={toast?.show!}
         success={toast?.success!}
@@ -35,7 +39,8 @@ function App() {
 
       <AnimatePresence exitBeforeEnter>
         <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Start />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/search">
             <Route index element={<Search />} />
             <Route path=":bookId" element={<BookDetails />} />

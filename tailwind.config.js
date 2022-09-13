@@ -5,6 +5,7 @@ module.exports = {
     fontFamily: {
       caudex: ["Caudex", "serif"],
       poppins: ["poppins", "sans-serif"],
+      play: ["Playfair Display", "serif"],
     },
     extend: {
       colors: {

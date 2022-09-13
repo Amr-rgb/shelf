@@ -16,7 +16,10 @@ export const Navbar = () => {
   }, [location]);
 
   return (
-    <div className="nav z-50 py-4 pb-6 fixed bottom-0 left-0 right-0">
+    <div
+      className="nav z-50 py-4 pb-6 fixed bottom-0 left-0 right-0"
+      style={{ display: active === "/" ? "none" : "block" }}
+    >
       <div className="px-4 flex items-center justify-between">
         <button
           onClick={() => navigate("/search")}
@@ -30,9 +33,11 @@ export const Navbar = () => {
         </button>
 
         <button
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/home")}
           className={`rounded-3xl p-5 duration-500 ${
-            active === "/" ? "bg-white pointer-events-none" : "cursor-pointer"
+            active === "/home"
+              ? "bg-white pointer-events-none"
+              : "cursor-pointer"
           }`}
         >
           <HomeIcon className="p-2 w-11" />
