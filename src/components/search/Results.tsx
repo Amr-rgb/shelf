@@ -130,8 +130,12 @@ const ResultCard = ({ book, searchValue }: BookCardType) => {
             className="z-50 absolute top-11 right-3 text-sm bg-white shadow-sm rounded-lg px-2 py-2 space-y-2"
             style={{ display: open ? "block" : "none" }}
           >
-            <p className="cursor-pointer p-2">Add To Library</p>
-            <p className="cursor-pointer p-2">See Details</p>
+            <button onClick={clickHandler} className="block cursor-pointer p-2">
+              Add To Library
+            </button>
+            <button onClick={clickHandler} className="cursor-pointer p-2">
+              See Details
+            </button>
           </div>
         </div>
       </div>
