@@ -12,8 +12,8 @@ export const Start = () => {
         <img src="/logo.svg" alt="logo" />
       </div>
 
-      <div className="mt-20 w-[75vw] mx-auto rounded-3xl overflow-hidden relative">
-        <div className="w-[75vw] h-[75vw] bg-gradient-to-b from-white to-transparent"></div>
+      <div className="mt-20 w-[75%] mx-auto rounded-3xl overflow-hidden relative">
+        <div className="w-full aspect-square bg-gradient-to-b from-white to-transparent"></div>
         <img
           className="absolute left-0 top-0 w-full h-full"
           src="/art.svg"

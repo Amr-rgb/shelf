@@ -17,7 +17,7 @@ export const Navbar = () => {
 
   return (
     <div
-      className="nav z-50 py-4 pb-6 fixed bottom-0 left-0 right-0"
+      className="nav z-50 py-4 pb-6 fixed bottom-0 left-0 right-0 max-w-sm mx-auto"
       style={{
         display: active === "/" || active === "/preferences" ? "none" : "block",
       }}

@@ -11,7 +11,7 @@ export const Header = ({ title }: { title: string }) => {
         onClick={() => navigate(-1)}
       />
 
-      <p className="font-bold text-[1.1rem] text-center absolute left-1/2 -translate-x-1/2 truncate w-[50vw]">
+      <p className="font-bold text-[1.1rem] text-center absolute left-1/2 -translate-x-1/2 truncate w-[50%]">
         {title}
       </p>
     </div>
