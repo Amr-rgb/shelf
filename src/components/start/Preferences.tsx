@@ -103,7 +103,7 @@ const Form = ({ name, gender, setName, setGender }: FormType) => {
 
       <div className="text-center space-y-2">
         <label htmlFor="name" className="block font-medium">
-          Your Name
+          User Name
         </label>
         <input
           className="p-4 w-80 border rounded-md"
