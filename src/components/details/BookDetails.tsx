@@ -175,12 +175,20 @@ const UserDetails = ({ bookId }: { bookId: number }) => {
 
   return (
     <div className="bg-white p-8 rounded-xl">
-      {book && (
+      {book ? (
         <div className="space-y-2">
           <LibraryBookDetails
             val1={book.pages}
             val2={book.read}
             getValues={getValues}
+          />
+        </div>
+      ) : (
+        <div className="py-8 flex items-center justify-center">
+          <img
+            className="animate-spin w-10 h-10"
+            src="/loading.svg"
+            alt="loading"
           />
         </div>
       )}
