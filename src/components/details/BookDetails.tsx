@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useLibrary } from "../../context/LibraryContext";
-import { AddBook } from "./AddBook";
+import { AddBook, isNumeric } from "./AddBook";
 import { Header } from "./Header";
 import { motion } from "framer-motion";
 
@@ -157,7 +157,7 @@ const BookDetail = ({ title, value }: { title: any; value: any }) => {
 const UserDetails = ({ bookId }: { bookId: number }) => {
   const navigate = useNavigate();
 
-  const { getBook, deleteFromLibrary, editBook } = useLibrary();
+  const { getBook, deleteFromLibrary, editBook, showMessage } = useLibrary();
   const [book, setBook] = useState<libraryBookType>(getBook("" + bookId));
 
   useEffect(() => {
@@ -189,8 +189,17 @@ const UserDetails = ({ bookId }: { bookId: number }) => {
         <button
           className="flex-1 py-4 px-8 rounded-xl bg-lightGreen"
           onClick={() => {
-            editBook("" + bookId, values.pages, values.read);
-            setTimeout(() => navigate(-1), 500);
+            if (
+              values.pages &&
+              isNumeric(values.pages) &&
+              isNumeric(values.read) &&
+              Number(values.read) <= Number(values.pages)
+            ) {
+              editBook("" + bookId, values.pages, values.read);
+              setTimeout(() => navigate(-1), 500);
+            } else {
+              showMessage(false, "Something Wrong In Your Input");
+            }
           }}
         >
           Save

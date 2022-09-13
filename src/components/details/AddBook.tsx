@@ -20,6 +20,10 @@ type FormType = {
   setReadValue: (val: string) => void;
 };
 
+export function isNumeric(n: any) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
 export const AddBook = ({ book }: { book: bookType }) => {
   const navigate = useNavigate();
 
@@ -27,20 +31,28 @@ export const AddBook = ({ book }: { book: bookType }) => {
   const [pagesValue, setPagesValue] = useState("");
   const [readValue, setReadValue] = useState("");
 
-  const { addToLibrary } = useLibrary();
+  const { addToLibrary, showMessage } = useLibrary();
 
   const clickHandler = () => {
-    const ourBook = {
-      id: "" + book.book_id,
-      title: book.name!,
-      authors: book.authors!,
-      pages: Number(pagesValue),
-      read: Number(readValue),
-      imgUrl: book.cover!,
-    };
+    if (
+      isNumeric(pagesValue) &&
+      isNumeric(readValue) &&
+      Number(readValue) <= Number(pagesValue)
+    ) {
+      const ourBook = {
+        id: "" + book.book_id,
+        title: book.name!,
+        authors: book.authors!,
+        pages: Number(pagesValue),
+        read: Number(readValue),
+        imgUrl: book.cover!,
+      };
 
-    addToLibrary(ourBook);
-    navigate(-1);
+      addToLibrary(ourBook);
+      navigate(-1);
+    } else {
+      showMessage(false, "Something Wrong In Your Input");
+    }
   };
 
   return (

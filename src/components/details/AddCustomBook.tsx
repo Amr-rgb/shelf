@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useLibrary } from "../../context/LibraryContext";
 import { Header } from "./Header";
 import { motion } from "framer-motion";
+import { isNumeric } from "./AddBook";
 
 type FormType = {
   title: string;
@@ -23,20 +24,29 @@ export const AddCustomBook = () => {
   const { addToLibrary, showMessage } = useLibrary();
 
   const clickHandler = () => {
-    const ourBook = {
-      custom: true,
-      id: "" + Date.now(),
-      title: title,
-      pages: Number(pagesValue),
-      read: Number(readValue),
-      imgUrl: "",
-    };
+    if (
+      title &&
+      isNumeric(pagesValue) &&
+      isNumeric(readValue) &&
+      Number(readValue) <= Number(pagesValue)
+    ) {
+      const ourBook = {
+        custom: true,
+        id: "" + Date.now(),
+        title: title,
+        pages: Number(pagesValue),
+        read: Number(readValue),
+        imgUrl: "",
+      };
 
-    addToLibrary(ourBook);
-    setTimeout(() => {
-      showMessage(true, "Your Book Added Successfully");
-      navigate("/library");
-    }, 500);
+      addToLibrary(ourBook);
+      setTimeout(() => {
+        showMessage(true, "Your Book Added Successfully");
+        navigate("/library");
+      }, 500);
+    } else {
+      showMessage(false, "Something Wrong In Your Input");
+    }
   };
 
   return (
