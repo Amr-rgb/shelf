@@ -35,11 +35,11 @@ export const Results = ({ res, searchValue, isLoading }: ResultsType) => {
   }, [res]);
 
   return (
-    <div className="mt-14">
+    <div className="mt-14 relative">
       <ResultsHeader number={results?.length || 0} />
 
       {isLoading && (
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+        <div className="absolute left-1/2 top-[10rem] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
           <img
             className="animate-spin w-10 h-10"
             src="/loading.svg"
