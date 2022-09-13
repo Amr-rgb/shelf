@@ -10,15 +10,14 @@ type SearchHeaderType = {
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const options = {
-  method: "GET",
-  headers: {
-    "X-RapidAPI-Key": "24d34f98acmshb5a060c30549351p12ce41jsn128c2396fe27",
-    "X-RapidAPI-Host": "hapi-books.p.rapidapi.com",
-  },
-};
-
 export const Search = () => {
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": process.env.API_KEY!,
+      "X-RapidAPI-Host": "hapi-books.p.rapidapi.com",
+    },
+  };
   const [searchValue, setSearchValue] = useState(
     window.sessionStorage.getItem("searchValue") || ""
   );

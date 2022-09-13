@@ -27,16 +27,14 @@ type bookType = {
   year?: number;
 };
 
-const options = {
-  method: "GET",
-  url: "https://hapi-books.p.rapidapi.com/book/56597885",
-  headers: {
-    "X-RapidAPI-Key": "24d34f98acmshb5a060c30549351p12ce41jsn128c2396fe27",
-    "X-RapidAPI-Host": "hapi-books.p.rapidapi.com",
-  },
-};
-
 export const BookDetails = () => {
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": process.env.API_KEY!,
+      "X-RapidAPI-Host": "hapi-books.p.rapidapi.com",
+    },
+  };
   const { bookId } = useParams();
   const [book, setBook] = useState<bookType>();
 
