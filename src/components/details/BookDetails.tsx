@@ -157,6 +157,9 @@ const BookDetail = ({ title, value }: { title: any; value: any }) => {
 const UserDetails = ({ bookId }: { bookId: number }) => {
   const navigate = useNavigate();
 
+  const saveBtn = useRef(null);
+  const deleteBtn = useRef(null);
+
   const { getBook, deleteFromLibrary, editBook, showMessage } = useLibrary();
   const [book, setBook] = useState<libraryBookType>(getBook("" + bookId));
 
@@ -195,8 +198,10 @@ const UserDetails = ({ bookId }: { bookId: number }) => {
 
       <div className="mt-8 flex space-x-2">
         <button
-          className="flex-1 py-4 px-8 rounded-xl bg-lightGreen"
-          onClick={() => {
+          ref={saveBtn}
+          className="flex-1 py-4 px-8 rounded-xl bg-lightGreen disabled:opacity-60"
+          disabled={!book}
+          onClick={(e) => {
             if (
               values.pages &&
               isNumeric(values.pages) &&
@@ -204,6 +209,10 @@ const UserDetails = ({ bookId }: { bookId: number }) => {
               Number(values.read) <= Number(values.pages)
             ) {
               editBook("" + bookId, values.pages, values.read);
+              const save = saveBtn.current! as HTMLButtonElement;
+              const del = deleteBtn.current! as HTMLButtonElement;
+              save.disabled = true;
+              del.disabled = true;
               setTimeout(() => navigate(-1), 500);
             } else {
               showMessage(false, "Something Wrong In Your Input");
@@ -213,7 +222,9 @@ const UserDetails = ({ bookId }: { bookId: number }) => {
           Save
         </button>
         <button
-          className="flex-1 py-4 px-8 rounded-xl bg-[#f00] text-white"
+          ref={deleteBtn}
+          className="flex-1 py-4 px-8 rounded-xl bg-[#f00] text-white disabled:opacity-60"
+          disabled={!book}
           onClick={() => {
             deleteFromLibrary("" + bookId);
             setTimeout(() => navigate(-1), 500);

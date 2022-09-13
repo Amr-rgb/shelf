@@ -23,7 +23,7 @@ export const AddCustomBook = () => {
 
   const { addToLibrary, showMessage } = useLibrary();
 
-  const clickHandler = () => {
+  const clickHandler = (e: any) => {
     if (
       title &&
       isNumeric(pagesValue) &&
@@ -39,6 +39,8 @@ export const AddCustomBook = () => {
         imgUrl: "",
       };
 
+      const target = e.target;
+      target.disabled = true;
       addToLibrary(ourBook);
       setTimeout(() => {
         showMessage(true, "Your Book Added Successfully");
@@ -68,7 +70,7 @@ export const AddCustomBook = () => {
         />
 
         <button
-          className="flex items-center justify-center space-x-4 w-full py-4 mt-8 rounded-xl bg-lightGreen font-medium text-sm"
+          className="flex items-center justify-center space-x-4 w-full py-4 mt-8 rounded-xl bg-lightGreen font-medium text-sm disabled:opacity-60"
           onClick={clickHandler}
         >
           <span>Add To Library</span>{" "}

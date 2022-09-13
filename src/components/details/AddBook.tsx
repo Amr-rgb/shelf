@@ -33,7 +33,7 @@ export const AddBook = ({ book }: { book: bookType }) => {
 
   const { addToLibrary, showMessage } = useLibrary();
 
-  const clickHandler = () => {
+  const clickHandler = (e: any) => {
     if (
       isNumeric(pagesValue) &&
       isNumeric(readValue) &&
@@ -48,6 +48,8 @@ export const AddBook = ({ book }: { book: bookType }) => {
         imgUrl: book.cover!,
       };
 
+      const target = e.target;
+      target.disabled = true;
       addToLibrary(ourBook);
       navigate(-1);
     } else {
@@ -78,7 +80,7 @@ export const AddBook = ({ book }: { book: bookType }) => {
         />
 
         <button
-          className="flex items-center justify-center space-x-4 w-full py-4 mt-8 rounded-xl bg-lightGreen font-medium text-sm"
+          className="flex items-center justify-center space-x-4 w-full py-4 mt-8 rounded-xl bg-lightGreen font-medium text-sm disabled:opacity-60"
           onClick={clickHandler}
         >
           <span>Add To Library</span>{" "}
