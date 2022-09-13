@@ -10,6 +10,7 @@ import { Toast } from "./components/Toast";
 import { useLibrary } from "./context/LibraryContext";
 import { AnimatePresence } from "framer-motion";
 import { Start } from "./components/start/Start";
+import { Preferences } from "./components/start/Preferences";
 
 function App() {
   const { toast } = useLibrary();
@@ -40,6 +41,7 @@ function App() {
       <AnimatePresence exitBeforeEnter>
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Start />} />
+          <Route path="/preferences" element={<Preferences />} />
           <Route path="/home" element={<Home />} />
           <Route path="/search">
             <Route index element={<Search />} />
