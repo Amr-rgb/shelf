@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useLibrary } from "../../context/LibraryContext";
+import { usePreferences } from "../../context/PreferencesContext";
 
 type FormType = {
   name: string;
@@ -8,8 +11,23 @@ type FormType = {
 };
 
 export const Preferences = () => {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
+
+  const { setUserName, setUserGender } = usePreferences();
+  const { showMessage } = useLibrary();
+
+  const clickHandler = () => {
+    if (name && gender) {
+      setUserName(name);
+      setUserGender(gender);
+      setTimeout(() => navigate("/home"), 500);
+    } else {
+      showMessage(false, "Fields Not Completed");
+    }
+  };
 
   return (
     <div>
@@ -28,7 +46,10 @@ export const Preferences = () => {
           setGender={setGender}
         />
 
-        <button className="mt-14 py-5 w-1/2 bg-offWhite rounded-2xl font-semibold">
+        <button
+          onClick={clickHandler}
+          className="mt-14 py-5 w-1/2 bg-offWhite rounded-2xl font-semibold"
+        >
           Save
         </button>
       </div>

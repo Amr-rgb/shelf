@@ -1,4 +1,5 @@
 import { useLibrary } from "../../context/LibraryContext";
+import { usePreferences } from "../../context/PreferencesContext";
 
 export const Main = () => {
   return (
@@ -10,16 +11,20 @@ export const Main = () => {
 };
 
 const Header = () => {
+  const { name, gender } = usePreferences();
+
   return (
     <div className="flex items-center space-x-4">
-      <img
-        className="w-16 rounded-full"
-        src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-        alt="avatar"
-      />
+      <div
+        className={`bg-[#e1e1e1] bg-[url(/${
+          gender || "male"
+        }.png)] bg-contain bg-no-repeat bg-top w-20 h-20 rounded-full`}
+      ></div>
       <div>
         <p className="font-medium text-xs opacity-30">Welcome Back,</p>
-        <p className="font-caudex font-bold text-3xl">{`John Sortino`}!</p>
+        <p className="font-caudex font-bold text-3xl capitalize">
+          {name || "user"}!
+        </p>
       </div>
     </div>
   );
